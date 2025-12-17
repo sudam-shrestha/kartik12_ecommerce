@@ -9,3 +9,4 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get("/",[PageController::class,"home"])->name("home");
+Route::post("/client/request",[PageController::class,"client_request"])->name("client.request");
