@@ -1,5 +1,25 @@
 <x-frontend-layout>
 
+
+
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Featured Products</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Some of the most loved items from our partner
+                    restaurants & stores</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card -->
+                @foreach ($products as $product)
+                    <x-product-card :product="$product"/>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+
     @push('css')
         <style>
             .form-input:focus {
@@ -116,7 +136,8 @@
                     <!-- Client Name -->
                     <div class="mb-6">
                         <label for="client_name" class="block text-gray-700 font-medium mb-2">
-                            <i class="fas fa-user text-(--primary) mr-2"></i>Full Name <span class="text-red-500">*</span>
+                            <i class="fas fa-user text-(--primary) mr-2"></i>Full Name <span
+                                class="text-red-500">*</span>
                         </label>
                         <input type="text" id="client_name" name="client_name" required
                             value="{{ old('client_name') }}"
@@ -181,8 +202,9 @@
                                 value="1">
                             <label for="terms" class="text-gray-700">
                                 I agree to the <a href="#"
-                                    class="text-(--primary) hover:text-(--primary) font-medium">Terms of Service</a> and <a
-                                    href="#" class="text-(--primary) hover:text-(--primary) font-medium">Privacy
+                                    class="text-(--primary) hover:text-(--primary) font-medium">Terms of Service</a>
+                                and <a href="#"
+                                    class="text-(--primary) hover:text-(--primary) font-medium">Privacy
                                     Policy</a>. I understand that my data will be processed as described in the privacy
                                 policy.
                             </label>

@@ -63,7 +63,7 @@
           <div class="flex flex-col md:flex-row justify-between items-center">
               <!-- Logo -->
               <div class="flex items-center mb-4 md:mb-0">
-                  <div class="flex items-center space-x-3">
+                  <a href="{{route('home')}}" class="flex items-center space-x-3">
                       <div class="bg-(--primary) text-white p-3 rounded-lg">
                           <i class="fas fa-cube text-2xl"></i>
                       </div>
@@ -71,21 +71,23 @@
                           <h1 class="text-2xl font-bold text-(--primary)">BrandLogo</h1>
                           <p class="text-sm text-gray-600">Premium Solutions</p>
                       </div>
-                  </div>
+                  </a>
               </div>
 
               <!-- Search Bar -->
               <div class="w-full md:w-1/3 mb-4 md:mb-0 relative">
                   <div class="relative">
-                      <input type="text" placeholder="Search products, articles, and more..."
-                          class="w-full py-3 pl-12 pr-4 rounded-full border border-gray-300 search-input focus:border-(--primary)">
-                      <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-                          <i class="fas fa-search"></i>
-                      </div>
-                      <button
-                          class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-(--primary) text-white py-1 px-4 rounded-full text-sm transition-colors">
-                          Search
-                      </button>
+                      <form action="{{route('search')}}" method="get">
+                          <input type="text" placeholder="Search products, articles, and more..." name="q"
+                              class="w-full py-3 pl-12 pr-4 rounded-full border border-gray-300 search-input focus:border-(--primary)">
+                          <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                              <i class="fas fa-search"></i>
+                          </div>
+                          <button
+                              class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-(--primary) text-white py-1 px-4 rounded-full text-sm transition-colors">
+                              Search
+                          </button>
+                      </form>
                   </div>
               </div>
 
