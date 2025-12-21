@@ -94,11 +94,11 @@
               <!-- Login and User Actions -->
               <div class="flex items-center space-x-4">
                   <!-- Login Button -->
-                  <button id="loginBtn"
+                  <a href="{{route('login')}}"
                       class="bg-white border border-(--primary) text-(--primary) hover:bg-(--primary)/20 py-2 px-6 rounded-full font-medium transition-colors flex items-center">
                       <i class="fas fa-user-circle mr-2"></i>
                       <span>Login</span>
-                  </button>
+                  </a>
 
                   <!-- Cart Icon -->
                   <div class="relative">
