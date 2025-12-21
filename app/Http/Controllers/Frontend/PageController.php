@@ -51,4 +51,11 @@ class PageController extends BaseController
         toast("Request submitted successfully", "success");
         return redirect()->back();
     }
+
+
+    public function product($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('frontend.product', compact('product'));
+    }
 }

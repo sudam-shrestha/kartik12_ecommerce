@@ -34,6 +34,10 @@
 
     <x-frontend-footer />
 
+
+
+    @stack('js')
+
 </body>
 
 </html>

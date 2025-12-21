@@ -15,7 +15,7 @@ class ClientsTable
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('client_name')
+                TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('shop_name')
                     ->searchable(),

@@ -13,7 +13,7 @@ class ClientForm
     {
         return $schema
             ->components([
-                TextInput::make('client_name')
+                TextInput::make('name')
                     ->required(),
                 TextInput::make('shop_name')
                     ->required(),
