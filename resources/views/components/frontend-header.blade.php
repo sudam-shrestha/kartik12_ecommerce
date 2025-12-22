@@ -63,7 +63,7 @@
           <div class="flex flex-col md:flex-row justify-between items-center">
               <!-- Logo -->
               <div class="flex items-center mb-4 md:mb-0">
-                  <a href="{{route('home')}}" class="flex items-center space-x-3">
+                  <a href="{{ route('home') }}" class="flex items-center space-x-3">
                       <div class="bg-(--primary) text-white p-3 rounded-lg">
                           <i class="fas fa-cube text-2xl"></i>
                       </div>
@@ -77,7 +77,7 @@
               <!-- Search Bar -->
               <div class="w-full md:w-1/3 mb-4 md:mb-0 relative">
                   <div class="relative">
-                      <form action="{{route('search')}}" method="get">
+                      <form action="{{ route('search') }}" method="get">
                           <input type="text" placeholder="Search products, articles, and more..." name="q"
                               class="w-full py-3 pl-12 pr-4 rounded-full border border-gray-300 search-input focus:border-(--primary)">
                           <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -94,11 +94,18 @@
               <!-- Login and User Actions -->
               <div class="flex items-center space-x-4">
                   <!-- Login Button -->
-                  <a href="{{route('login')}}"
-                      class="bg-white border border-(--primary) text-(--primary) hover:bg-(--primary)/20 py-2 px-6 rounded-full font-medium transition-colors flex items-center">
-                      <i class="fas fa-user-circle mr-2"></i>
-                      <span>Login</span>
-                  </a>
+                  @if (!Auth::user())
+                      <a href="{{ route('login') }}"
+                          class="bg-white border border-(--primary) text-(--primary) hover:bg-(--primary)/20 py-2 px-6 rounded-full font-medium transition-colors flex items-center">
+                          <i class="fas fa-user-circle mr-2"></i>
+                          <span>Login</span>
+                      </a>
+                  @else
+                      <form action="{{ route('logout') }}" method="post">
+                          @csrf
+                          <button type="submit" class="bg-[red] text-white px-2 py-0.5 rounded">Logout</button>
+                      </form>
+                  @endif
 
                   <!-- Cart Icon -->
                   <div class="relative">

@@ -64,15 +64,10 @@
             </button>
         </div>
 
-        <!-- Register Link -->
-        <div class="text-center pt-6">
-            <p class="text-sm text-gray-600">
-                Don't have an account?
-                <a href="{{ route('register') }}"
-                    class="font-medium text-indigo-600 hover:text-indigo-700 underline-offset-2 hover:underline transition ml-1">
-                    Sign up
-                </a>
-            </p>
+        <div>
+            <a href="{{route('google_redirect')}}">
+                <img src="{{ asset('frontend/images/login.jpg') }}" alt="Login Btn">
+            </a>
         </div>
     </form>
 </x-guest-layout>

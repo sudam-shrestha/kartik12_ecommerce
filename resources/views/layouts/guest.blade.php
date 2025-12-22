@@ -22,12 +22,6 @@
 <body
     class="font-sans text-gray-900 antialiased bg-gradient-to-br from-blue-50 via-white to-indigo-50 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-md px-6 py-12">
-        <!-- Logo -->
-        <div class="flex justify-center mb-10">
-            <a href="/">
-                <x-application-logo class="w-24 h-24 fill-current text-indigo-600 drop-shadow-md" />
-            </a>
-        </div>
 
         <!-- Card Container -->
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
