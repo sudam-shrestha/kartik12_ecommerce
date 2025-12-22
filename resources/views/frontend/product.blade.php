@@ -59,7 +59,7 @@
                     </div>
 
                     <!-- Add to Cart Form -->
-                    <form action="" method="POST" class="mt-8">
+                    <form action="{{route('cart')}}" method="POST" class="mt-8">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
 
@@ -70,7 +70,7 @@
                                     class="px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-l-lg transition">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <input type="number" name="quantity" value="1" min="1" id="qty" class="w-20 text-center py-3 focus:outline-none"
+                                <input type="number" name="qty" value="1" min="1" id="qty" class="w-20 text-center py-3 focus:outline-none"
                                     required>
                                 <button type="button" onclick="incQty()"
                                     class="px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-r-lg transition">

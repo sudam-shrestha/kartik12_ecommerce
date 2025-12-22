@@ -26,10 +26,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    Route::post("/cart", [PageController::class, "cart"])->name("cart");
+    Route::get("/carts", [PageController::class, "carts"])->name("carts");
 });
 
 
-Route::get("/google/redirect", [AuthController::class,"google_redirect"])->name("google_redirect");
-Route::get("/google/callback", [AuthController::class,"google_callback"])->name("google_callback");
+Route::get("/google/redirect", [AuthController::class, "google_redirect"])->name("google_redirect");
+Route::get("/google/callback", [AuthController::class, "google_callback"])->name("google_callback");
 
 require __DIR__ . '/auth.php';

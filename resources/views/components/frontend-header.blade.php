@@ -108,13 +108,15 @@
                   @endif
 
                   <!-- Cart Icon -->
-                  <div class="relative">
+                  <a href="{{route('carts')}}" class="relative">
                       <button class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition-colors">
                           <i class="fas fa-shopping-cart text-gray-700"></i>
                       </button>
                       <span
-                          class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-                  </div>
+                          class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {{ count($carts) }}
+                      </span>
+                  </a>
 
                   <!-- Mobile Menu Button -->
                   <button id="mobileMenuBtn"
