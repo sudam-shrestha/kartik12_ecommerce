@@ -108,7 +108,7 @@
                   @endif
 
                   <!-- Cart Icon -->
-                  <a href="{{route('carts')}}" class="relative">
+                  <a href="{{ route('carts') }}" class="relative">
                       <button class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition-colors">
                           <i class="fas fa-shopping-cart text-gray-700"></i>
                       </button>
@@ -161,11 +161,13 @@
 
 
   <!-- JavaScript for interactivity -->
-  <script>
-      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
+  @push('js')
+      <script>
+          const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+          const mobileMenu = document.getElementById('mobileMenu');
 
-      mobileMenuBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-      });
-  </script>
+          mobileMenuBtn.addEventListener('click', () => {
+              mobileMenu.classList.toggle('hidden');
+          });
+      </script>
+  @endpush

@@ -7,10 +7,14 @@ use App\Mail\ClientRequestNotification;
 use App\Models\Admin;
 use App\Models\Cart;
 use App\Models\Client;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
 class PageController extends BaseController
@@ -84,8 +88,82 @@ class PageController extends BaseController
             ->carts()
             ->with('product.client')
             ->get()
-            ->groupBy('product.client_id'); 
+            ->groupBy('product.client_id');
 
         return view('frontend.carts', compact('cartItems'));
+    }
+
+    public function checkout($id)
+    {
+        $client = Client::findOrFail($id);
+        return view('frontend.checkout', compact('client'));
+    }
+
+
+    public function order(Request $request, $clientId)
+    {
+        $request->validate([
+            'delivery_address' => 'required|string|max:500',
+            'payment_method' => 'required',
+        ]);
+
+        $cartItems = auth()->user()->carts()
+            ->whereHas('product', fn($q) => $q->where('client_id', $clientId))
+            ->with('product')
+            ->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Cart is empty.');
+        }
+
+        $total = $cartItems->sum(
+            fn($item) => ($item->product->price - ($item->product->price * $item->product->discount / 100)) * $item->qty
+        );
+
+        $order = Order::create([
+            'user_id' => auth()->id(),
+            'client_id' => $clientId,
+            'total_amount' => $total,
+            'status' => 'pending',
+            'delivery_address' => $request->delivery_address,
+        ]);
+
+        foreach ($cartItems as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'qty' => $item->qty,
+                'amount' => ($item->product->price - ($item->product->price * $item->product->discount / 100)) * $item->qty,
+            ]);
+        }
+
+        Payment::create([
+            'user_id' => auth()->id(),
+            'order_id' => $order->id,
+            'payment_method' => $request->payment_method,
+            'status' => 'pending',
+            'amount' => $total,
+        ]);
+
+        // $cartItems->each->delete();
+
+        if ($request->payment_method == 'khalti') {
+            $response = Http::withHeaders([
+                "Authorization"=> "Key ". env("KHALTI_SECRET"),
+            ])->post("https://dev.khalti.com/api/v2/epayment/initiate", [
+                "return_url" => "http://127.0.0.1:8000/payment/",
+                "website_url" => "http://127.0.0.1:8000/",
+                "amount" => $total,
+                "purchase_order_id" => $order->id,
+                "purchase_order_name" => "Order #{$order->id}",
+            ]);
+            return $response;
+            if($response["payment_url"]){
+                return redirect($response["payment_url"]);
+            }
+        }
+
+        toast("Order placed successfully", "success");
+        return redirect()->route('carts');
     }
 }

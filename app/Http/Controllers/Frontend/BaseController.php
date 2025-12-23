@@ -14,7 +14,7 @@ class BaseController extends Controller
     public function __construct()
     {
         $color = Color::first();
-        $carts = Cart::where("user_id", Auth::user()->id)->get();
+        $carts = Cart::where("user_id", Auth::user()?->id)->get();
         View::share([
             "color" => $color,
             "carts" => $carts

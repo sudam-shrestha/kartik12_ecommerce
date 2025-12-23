@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post("/cart", [PageController::class, "cart"])->name("cart");
     Route::get("/carts", [PageController::class, "carts"])->name("carts");
+    Route::get("/checkout/{id}", [PageController::class, "checkout"])->name("checkout");
+
+    Route::post('/order/place/{client}', [PageController::class, 'order'])->name('order.place');
 });
 
 

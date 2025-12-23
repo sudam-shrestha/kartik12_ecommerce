@@ -121,7 +121,7 @@
                             </p>
                         </div>
 
-                        <a href=""
+                        <a href="{{ route('checkout', $client->id) }}"
                             class="inline-block bg-purple-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-purple-700 transition shadow-lg transform hover:scale-105">
                             Checkout from {{ $client->shop_name }}
                         </a>
