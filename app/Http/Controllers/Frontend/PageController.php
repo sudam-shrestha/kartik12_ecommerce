@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
@@ -145,24 +146,48 @@ class PageController extends BaseController
             'amount' => $total,
         ]);
 
-        // $cartItems->each->delete();
+        $cartItems->each->delete();
 
         if ($request->payment_method == 'khalti') {
             $response = Http::withHeaders([
-                "Authorization"=> "Key ". env("KHALTI_SECRET"),
-            ])->post("https://dev.khalti.com/api/v2/epayment/initiate", [
-                "return_url" => "http://127.0.0.1:8000/payment/",
-                "website_url" => "http://127.0.0.1:8000/",
-                "amount" => $total,
+                "Authorization" => "Key " . env("KHALTI_SECRET"),
+                'Content-Type'  => 'application/json',
+            ])->post("https://dev.khalti.com/api/v2/epayment/initiate/", [
+                "return_url" => route('khalti_callback'),
+                "website_url" => route('home'),
+                "amount" => $total * 100,
                 "purchase_order_id" => $order->id,
                 "purchase_order_name" => "Order #{$order->id}",
             ]);
-            return $response;
-            if($response["payment_url"]){
+            if ($response["payment_url"]) {
+                Cookie::queue("order_id", $order->id);
                 return redirect($response["payment_url"]);
             }
         }
 
+        toast("Order placed successfully", "success");
+        return redirect()->route('carts');
+    }
+
+
+    public function khalti_callback(Request $request)
+    {
+        $order_id = Cookie::get("order_id");
+        $order = Order::find($order_id);
+
+        $response = Http::withHeaders([
+            "Authorization" => "Key " . env("KHALTI_SECRET"),
+            'Content-Type'  => 'application/json',
+        ])->post("https://dev.khalti.com/api/v2/epayment/lookup/", [
+           "pidx" => $request["pidx"]
+        ]);
+
+        $payment = $order->payment;
+
+        $payment->status = $response["status"];
+        $payment->save();
+
+        Cookie::forget("order_id");
         toast("Order placed successfully", "success");
         return redirect()->route('carts');
     }
