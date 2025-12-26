@@ -17,6 +17,11 @@
             --bg: {{ $color->bg }};
         }
 
+        .container{
+            width: 86%;
+            margin: auto;
+        }
+
         button{
             cursor: pointer;
         }
